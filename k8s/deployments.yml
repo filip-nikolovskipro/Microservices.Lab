@@ -1,0 +1,113 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webrecordhttpaggregator
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: microservices-lab
+        component: webrecordhttpaggregator
+    spec:
+      containers:
+        - name: webrecordhttpaggregator
+          image: fnikolovski/webrecordhttpaggregator:latest
+          imagePullPolicy: Always
+          env:
+            - name: urls__AuditLog
+              valueFrom:
+               configMapKeyRef:
+                 name: internalurls
+                 key: auditlog
+            - name: urls__Authorization
+              valueFrom:
+               configMapKeyRef:
+                 name: internalurls
+                 key: authorization
+          ports:
+            - containerPort: 80
+
+
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: authorizationapi
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: microservices-lab
+        component: authorizationapi
+    spec:
+      containers:
+        - name: authorizationapi
+          image: fnikolovski/authorizationapi:latest
+          imagePullPolicy: Always
+          #env:
+          ports:
+            - containerPort: 80
+
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: auditlogapi
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: microservices-lab
+        component: auditlogapi
+    spec:
+      containers:
+        - name: auditlogapi
+          image: fnikolovski/auditlogapi:latest
+          imagePullPolicy: Always
+          #env:
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: apigwws
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: microservices-lab
+        component: apigwws
+    spec:
+      containers:
+        - name: apigwws
+          image: fnikolovski/ocelotapigw:latest
+          imagePullPolicy: Always
+          env:
+            #- name: PATH_BASE
+            #  value: /recordapigw 
+            - name: urls__AuditLog
+              valueFrom:
+               configMapKeyRef:
+                 name: internalurls
+                 key: auditlog
+            - name: urls__Authorization
+              valueFrom:
+               configMapKeyRef:
+                 name: internalurls
+                 key: authorization
+            - name: urls__Authorization
+              valueFrom:
+               configMapKeyRef:
+                 name: internalurls
+                 key: authorization
+          ports:
+            - containerPort: 80

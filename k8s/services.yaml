@@ -1,0 +1,89 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: microservices-lab
+    component: authorizationapi
+  name: authorizationapi
+spec:
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 80 #8080
+      # Port to forward to inside the pod
+      #targetPort: 80
+      # Port accessible outside cluster
+      #nodePort: 30001
+  selector:
+    app: microservices-lab
+    component: authorizationapi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: microservices-lab
+    component: auditlogapi
+  name: auditlogapi
+spec:
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 8080
+      # Port to forward to inside the pod
+      targetPort: 80
+      # Port accessible outside cluster
+      nodePort: 30002
+  selector:
+    app: microservices-lab
+    component: auditlogapi
+  type: LoadBalancer
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: microservices-lab
+    component: webrecordhttpaggregator
+  name: webrecordhttpaggregator
+spec:
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 8080
+      # Port to forward to inside the pod
+      targetPort: 80
+      # Port accessible outside cluster
+      nodePort: 30005
+  selector:
+    app: microservices-lab
+    component: webrecordhttpaggregator
+  type: LoadBalancer
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: microservices-lab
+    component: apigwws
+  name: apigwws
+spec:
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 8080
+      # Port to forward to inside the pod
+      targetPort: 80
+      # Port accessible outside cluster
+      nodePort: 30006
+  selector:
+    app: microservices-lab
+    component: apigwws
+  type: LoadBalancer

@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  authorization.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "9101:80"
+
+  auditlog.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "9100:80"
+
+
+  web.record.httpaggregator:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "9102:80"
+
+
+  ocelotapigw:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "9103:80"
+

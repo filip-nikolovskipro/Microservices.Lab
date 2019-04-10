@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "authorizationapi.fullname" . }}
+  labels:
+    app: {{ template "authorizationapi.name" . }}
+    chart: {{ template "authorizationapi.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "authorizationapi.name" . }}
+    release: {{ .Release.Name }}

@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  authorization.api:
+    image: ${DOCKER_REGISTRY-}authorizationapi
+    build:
+      context: .
+      dockerfile: src/Services/Authorization/Authorization.API/Dockerfile
+
+  auditlog.api:
+    image: ${DOCKER_REGISTRY-}auditlogapi
+    build:
+      context: .
+      dockerfile: src/Services/AuditEvents/AuditLog/Dockerfile
+
+
+  web.record.httpaggregator:
+    image: ${DOCKER_REGISTRY-}webrecordhttpaggregator
+    build:
+      context: .
+      dockerfile: src/ApiGateways/Web.Bff.Record/aggregator/Web.Record.HttpAggregator/Dockerfile
+
+
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: src/ApiGateways/ApiGw-Base/Dockerfile
+

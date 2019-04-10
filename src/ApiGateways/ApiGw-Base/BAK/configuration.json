@@ -1,0 +1,56 @@
+﻿{
+  "ReRoutes": [
+		{
+			"DownstreamPathTemplate": "/api/{everything}",
+			"DownstreamScheme": "http",
+			"DownstreamHostAndPorts": [
+				{
+					"Host": "localhost", //auditLog.api
+					"Port": 5000
+				}
+			],
+			"UpstreamPathTemplate": "/api/audit/{everything}",
+			"UpstreamHttpMethod": [] //"GET"
+		},
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+				{
+					"Host": "localhost", //authorization.api
+					"Port": 5001
+				}
+      ],
+      "UpstreamPathTemplate": "/api/authorize/{everything}",
+      "UpstreamHttpMethod": [],
+			"AuthenticationOptions": {
+				"AuthenticationProviderKey": "", //IdentityApiKey
+				"AllowedScopes": []
+			}
+    },
+
+		{
+			"DownstreamPathTemplate": "/api/{everything}",
+			"DownstreamScheme": "http",
+			"DownstreamHostAndPorts": [
+				{
+					"Host": "localhost", //Web.Record.HttpAggregator
+					"Port": 5002
+				}
+			],
+			"UpstreamPathTemplate": "/{everything}",
+			"UpstreamHttpMethod": [], //"POST", "PUT", "GET"
+			"AuthenticationOptions": {
+				"AuthenticationProviderKey": "", //IdentityApiKey
+				"AllowedScopes": []
+			}
+		}
+   
+
+  ],
+    "GlobalConfiguration": {
+      "RequestIdKey": "OcRequestId",
+      "AdministrationPath": "/administration"
+    }
+  }
+  

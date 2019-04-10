@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: internalurls
+  labels:
+    app: microservices-lab  
+data:
+# Internal Services & healthchecks
+  auditlog: http://auditlogapi:8080
+  #auditlog__hc: http://basket/hc
+  authorization: http://authorizationapi:80
+  #authorization__hc: http://authorizationapi:80/hc
+  #spa__hc: http://webspa/hc
+# Aggreggators
+  mobileshoppingagg: http://webrecordhttpaggregator:8080
+# API GWs
+  #apigwmm: http://ocelotapigw-mm
